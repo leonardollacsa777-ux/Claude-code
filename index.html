@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOLT ENERGY — Aumenta tu voltaje</title>
+<meta name="description" content="VOLT ENERGY, la bebida energética con ginseng. Descubre los sabores Fresa, Maracuyá y Limón.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-flavor="fresa">
+
+  <div class="bg-fx" aria-hidden="true">
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+    <div class="stars"></div>
+    <div id="particles" class="particles"></div>
+  </div>
+
+  <header class="navbar">
+    <a href="#top" class="logo">
+      <svg class="logo-bolt" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+        <path d="M13 0 2 14h8l-3 10L22 9h-9l0-9z"/>
+      </svg>
+      VOLT
+    </a>
+    <nav class="nav-links">
+      <a href="#top">Inicio</a>
+      <a href="#sabores">Sabores</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a href="#contacto" class="btn btn-ghost nav-cta">Comprar ahora</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="top" class="hero">
+      <div class="hero-grid" aria-hidden="true"></div>
+
+      <div class="hero-copy">
+        <span class="eyebrow">// aumenta tu voltaje</span>
+        <h1 class="hero-title">ENERGÍA<br>DEL FUTURO<span class="dot">.</span></h1>
+        <p class="hero-desc">
+          <strong>VOLT</strong> es la bebida energética que enciende tu instinto: fusiona cafeína,
+          taurina y ginseng en una fórmula de alto voltaje diseñada para llevar tu cuerpo y tu
+          mente al siguiente nivel. Sin límites. Sin pausas. Solo energía pura.
+        </p>
+        <div class="hero-badges">
+          <span class="badge">⚡ Con ginseng</span>
+          <span class="badge">355 ml</span>
+          <span class="badge">18+</span>
+        </div>
+        <div class="hero-actions">
+          <a href="#sabores" class="btn btn-primary">Descubre los sabores</a>
+          <a href="#contacto" class="btn btn-outline">Comprar ahora</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="stage stage-hero">
+          <div class="floor" aria-hidden="true"></div>
+          <div class="can-shadow" aria-hidden="true"></div>
+          <div class="hero-photo-wrap">
+            <img class="hero-photo" src="assets/volt-can.png" alt="Lata de VOLT Energy Drink sabor Ginseng">
+          </div>
+        </div>
+      </div>
+
+      <a href="#sabores" class="scroll-cue" aria-label="Ir a sabores">
+        <span></span>
+      </a>
+    </section>
+
+    <!-- SABORES -->
+    <section id="sabores" class="flavors">
+      <div class="section-head">
+        <span class="eyebrow">// elige tu carga</span>
+        <h2>Tres sabores. Una sola energía.</h2>
+        <p>Desliza, usa las flechas o los puntos para descubrir cada explosión de sabor. Cada
+          lata gira para revelarte la siguiente.</p>
+      </div>
+
+      <div class="carousel" id="carousel">
+        <button class="arrow arrow-prev" id="prevBtn" aria-label="Sabor anterior">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M15 4l-8 8 8 8"/></svg>
+        </button>
+
+        <div class="stage stage-carousel">
+          <div class="floor" aria-hidden="true"></div>
+          <div class="can-shadow" aria-hidden="true"></div>
+
+          <div class="orbit orbit-1" aria-hidden="true"></div>
+          <div class="orbit orbit-2" aria-hidden="true"></div>
+          <div class="orbit orbit-3" aria-hidden="true"></div>
+
+          <div class="can-wrap" id="flavorCanWrap">
+            <div class="can" id="flavorCan">
+              <div class="can-rim can-rim-top"></div>
+              <div class="can-tab"></div>
+              <div class="can-label">
+                <span class="can-label-brand">VOLT</span>
+                <span class="can-label-text" id="canLabelText">FRESA</span>
+              </div>
+              <div class="can-sheen"></div>
+              <span class="can-drop can-drop-1"></span>
+              <span class="can-drop can-drop-2"></span>
+              <span class="can-drop can-drop-3"></span>
+              <div class="can-rim can-rim-bottom"></div>
+            </div>
+          </div>
+        </div>
+
+        <button class="arrow arrow-next" id="nextBtn" aria-label="Siguiente sabor">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M9 4l8 8-8 8"/></svg>
+        </button>
+
+        <div class="flavor-info">
+          <span class="flavor-index" id="flavorIndex">01 / 03</span>
+          <h3 class="flavor-name" id="flavorName">Fresa</h3>
+          <p class="flavor-desc" id="flavorDesc">
+            Una oleada de fresas silvestres maduras con un toque efervescente. Dulce, intensa y adictiva.
+          </p>
+          <ul class="flavor-tags" id="flavorTags">
+            <li>Sabor natural</li>
+            <li>Efecto inmediato</li>
+            <li>Edición neón</li>
+          </ul>
+          <a href="#contacto" class="btn btn-primary">Añadir al pedido</a>
+        </div>
+
+        <div class="dots" id="dots">
+          <button class="dot is-active" data-index="0" aria-label="Sabor Fresa"></button>
+          <button class="dot" data-index="1" aria-label="Sabor Maracuyá"></button>
+          <button class="dot" data-index="2" aria-label="Sabor Limón"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOSOTROS -->
+    <section id="nosotros" class="about">
+      <div class="about-grid">
+        <div class="about-card">
+          <span class="about-icon">⚙</span>
+          <h3>Fórmula de vanguardia</h3>
+          <p>Cafeína, taurina, ginseng y vitaminas B combinadas mediante procesos de precisión
+            para una energía sostenida, sin bajones.</p>
+        </div>
+        <div class="about-card">
+          <span class="about-icon">◈</span>
+          <h3>Diseño futurista</h3>
+          <p>Cada lata está pensada como una pieza de tecnología: aluminio reforzado, acabado
+            holográfico y sabor de otro planeta.</p>
+        </div>
+        <div class="about-card">
+          <span class="about-icon">✧</span>
+          <h3>Sabores reales</h3>
+          <p>Fruta de verdad detrás de cada lata: fresa silvestre, maracuyá tropical y limón
+            recién cortado.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="cta">
+      <h2>¿Listo para encender tu energía?</h2>
+      <p>Consíguelo en tiendas seleccionadas o contáctanos para distribución.</p>
+      <a href="mailto:hola@volt.energy" class="btn btn-primary btn-lg">Comprar ahora</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-top">
+      <a href="#top" class="logo">
+        <svg class="logo-bolt" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path d="M13 0 2 14h8l-3 10L22 9h-9l0-9z"/>
+        </svg>
+        VOLT
+      </a>
+      <div class="footer-social" aria-label="Redes sociales">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor"/><circle cx="17.2" cy="6.8" r="1.1"/></svg></a>
+        <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M14 3c.4 2.2 1.9 3.7 4 4v3c-1.5 0-2.9-.4-4-1.2V15a6 6 0 1 1-6-6c.3 0 .7 0 1 .1v3.1a3 3 0 1 0 2 2.8V3h3z"/></svg></a>
+        <a href="#" aria-label="X"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M3 3l7.5 9L3.5 21h2.4l6-6.7 4.6 6.7H21l-7.8-9.4L20.5 3h-2.4l-5.5 6.2L8 3H3z"/></svg></a>
+      </div>
+    </div>
+    <p class="footer-disclaimer">
+      Bebida energética. Consumo no recomendado para menores de 18 años, mujeres embarazadas o
+      personas sensibles a la cafeína. Alto contenido en cafeína.
+    </p>
+    <p class="footer-copy">© 2026 VOLT ENERGY. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
