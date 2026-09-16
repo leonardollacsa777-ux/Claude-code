@@ -1,0 +1,34 @@
+/* fuentes.css — Cinzel (titulos) y EB Garamond (textos).
+   Los .woff2 vienen del paquete @fontsource y estan COPIADOS dentro del
+   proyecto (src/estilos/fuentes/). Por eso la presentacion funciona sin
+   internet: no se pide ninguna fuente a Google.
+   Para actualizarlas: npm run fuentes                                   */
+
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 600;
+  font-display: block;
+  src: url('./fuentes/cinzel-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cinzel';
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url('./fuentes/cinzel-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('./fuentes/eb-garamond-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+  src: url('./fuentes/eb-garamond-latin-500-normal.woff2') format('woff2');
+}

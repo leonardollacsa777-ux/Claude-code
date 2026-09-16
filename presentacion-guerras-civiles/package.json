@@ -1,0 +1,24 @@
+{
+  "name": "presentacion-guerras-civiles",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Las guerras civiles entre los conquistadores (Peru, 1537-1554) - presentacion 3D",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "capturas": "node scripts/capturas.mjs",
+    "fuentes": "node -e \"const f=require('fs');const c=(a,b)=>f.copyFileSync(a,'src/estilos/fuentes/'+b);c('node_modules/@fontsource/cinzel/files/cinzel-latin-600-normal.woff2','cinzel-latin-600-normal.woff2');c('node_modules/@fontsource/cinzel/files/cinzel-latin-700-normal.woff2','cinzel-latin-700-normal.woff2');c('node_modules/@fontsource/eb-garamond/files/eb-garamond-latin-400-normal.woff2','eb-garamond-latin-400-normal.woff2');c('node_modules/@fontsource/eb-garamond/files/eb-garamond-latin-500-normal.woff2','eb-garamond-latin-500-normal.woff2');console.log('fuentes actualizadas')\""
+  },
+  "dependencies": {
+    "@fontsource/cinzel": "^5.3.0",
+    "@fontsource/eb-garamond": "^5.3.0",
+    "gsap": "^3.15.0",
+    "three": "^0.186.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.0",
+    "vite-plugin-singlefile": "^2.3.3"
+  }
+}
