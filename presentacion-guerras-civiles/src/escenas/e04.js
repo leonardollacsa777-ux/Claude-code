@@ -19,18 +19,19 @@ export default {
 
     // El carrusel gira entero: por eso los retratos cuelgan de un pivote.
     const pivote = new Group();
-    pivote.position.set(L.x, suelo + 56, L.z);
+    // Desplazado al este: así el carrusel queda a la derecha del panel de texto.
+    pivote.position.set(L.x + 24, suelo + 56, L.z);
     grupo.add(pivote);
 
     const radio = 31;
-    const arco = Math.PI * 0.86; // algo menos de media vuelta
+    const arco = Math.PI * 0.72;
     const retratos = [];
 
     for (let i = 0; i < PERSONAJES.length; i++) {
       const t = PERSONAJES.length === 1 ? 0.5 : i / (PERSONAJES.length - 1);
       const ang = -arco / 2 + t * arco;
 
-      const marco = crearRetrato(PERSONAJES[i], i, { alto: 7.6 });
+      const marco = crearRetrato(PERSONAJES[i], i, { alto: 11 });
       marco.position.set(Math.sin(ang) * radio, 0, Math.cos(ang) * radio);
       // Mira hacia afuera del semicirculo, que es donde esta la camara.
       marco.rotation.y = ang;
@@ -44,12 +45,17 @@ export default {
 
     return {
       grupo,
-      activar({ efectos }) { efectos.clima(null); },
+      activar({ efectos }) {
+        efectos.clima(null);
+        // La transición 3 -> 4 los hace crecer desde cero; si se llega por
+        // otro camino hay que asegurarse de que estén a tamaño normal.
+        pivote.scale.setScalar(1);
+      },
       desactivar() {},
       animar(t, dt, activa) {
         if (!activa) return;
         // Giro lento de vaiven: se ven todos sin marear.
-        pivote.rotation.y = Math.sin(t * 0.085) * 0.30;
+        pivote.rotation.y = Math.sin(t * 0.085) * 0.22;
         for (const m of retratos) {
           m.position.y = Math.sin(t * 0.55 + m.userData.fase) * 0.65;
           m.rotation.z = Math.sin(t * 0.4 + m.userData.fase) * 0.012;

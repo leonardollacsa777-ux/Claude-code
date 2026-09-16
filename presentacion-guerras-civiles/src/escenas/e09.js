@@ -49,7 +49,11 @@ export default {
 
     return {
       grupo,
-      activar({ efectos }) { efectos.clima(null); },
+      activar({ efectos }) {
+        efectos.clima(null);
+        // La transición 9 -> 10 encoge el sello al estallar.
+        documento.userData.sello.scale.setScalar(1);
+      },
       desactivar() {},
       animar(t, dt, activa) {
         if (!activa) return;

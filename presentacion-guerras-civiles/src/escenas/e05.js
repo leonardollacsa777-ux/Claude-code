@@ -33,7 +33,7 @@ export default {
       [LUGARES.pucara.x + 2, LUGARES.pucara.z + 6],
       [C.x + 6, C.z + 16],
       [C.x, C.z + 3],
-    ], { cantidad: 80, color: '#7FB4D4', tamano: 0.55 });
+    ], { cantidad: 80, color: '#8FC8E8', tamano: 0.95, altura: 2.4 });
     grupo.add(ruta);
 
     const ciudad = crearCiudad({
@@ -51,8 +51,8 @@ export default {
 
     // La tropa de Almagro, llegando por el sur.
     const tropa = crearEjercito({
-      centro: [C.x + 4, C.z + 21],
-      rumbo: Math.PI,
+      centro: [C.x + 13, C.z + 19],
+      rumbo: Math.PI * 0.78,
       cantidad: 54, ancho: 18, fondo: 8,
       color: '#3A5573', arma: 'pica', sembrado: 43,
     });
@@ -61,12 +61,12 @@ export default {
     const rotulo = crearLetrero('Abril de 1537 · Almagro ocupa el Cusco', {
       alto: 2.6, color: '#F2E3BC',
     });
-    rotulo.position.set(C.x, suelo + 17, C.z);
+    rotulo.position.set(C.x + 16, suelo + 21, C.z + 10);
     grupo.add(rotulo);
     R.letreros.push(rotulo);
 
     const polvo = crearParticulas('polvo', {
-      origen: [C.x + 4, suelo + 0.6, C.z + 19], sembrado: 44, cantidad: 90,
+      origen: [C.x + 13, suelo + 0.6, C.z + 17], sembrado: 44, cantidad: 90,
     });
     grupo.add(polvo.puntos);
 

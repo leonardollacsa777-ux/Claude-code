@@ -36,6 +36,16 @@ export default {
       grupo,
       activar({ efectos }) {
         efectos.clima(null);
+
+        // Dejamos el pergamino como debe estar, venga de donde venga la cámara.
+        // Hace falta porque al ir HACIA ATRÁS los efectos de la transición
+        // 2 -> 3 se ejecutan igual y lo dejarían escondido.
+        pergamino.visible = true;
+        pergamino.scale.setScalar(1);
+        pergamino.rotation.set(-0.34, 0, 0);
+        pergamino.userData.hoja.material.opacity = 1;
+        pergamino.userData.sello.scale.setScalar(1);
+
         const u = pergamino.userData.uniformes;
         if (tl) tl.kill();
         tl = gsap.timeline();

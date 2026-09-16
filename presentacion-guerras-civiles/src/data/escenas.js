@@ -64,8 +64,8 @@ export const ESCENAS = [
       'Al final, la Corona española impuso su autoridad.',
     ],
     camara: {
-      posicion: punto('centro', -6, 30, 40),
-      objetivo: punto('centro', -17, 27, 0),
+      posicion: punto('centro', -2, 32, 58),
+      objetivo: punto('centro', -13, 27, 6),
     },
     ambiente: 'dia',
     efectoTexto: 'tinta',
@@ -110,8 +110,8 @@ export const ESCENAS = [
       'Francisco Hernández Girón: líder de la última rebelión.',
     ],
     camara: {
-      posicion: punto('centro', 4, 62, 84),
-      objetivo: punto('centro', -14, 56, 0),
+      posicion: punto('centro', 12, 60, 76),
+      objetivo: punto('centro', -6, 54, 6),
     },
     ambiente: 'dia',
     efectoTexto: 'destello',
@@ -131,8 +131,8 @@ export const ESCENAS = [
       '12 de julio de 1537: vence a Alonso de Alvarado en la batalla de Abancay.',
     ],
     camara: {
-      posicion: punto('cusco', -30, 21, 48),
-      objetivo: punto('cusco', -16, 5, 2),
+      posicion: punto('cusco', -28, 27, -30),
+      objetivo: punto('cusco', 2, 1, 14),
     },
     ambiente: 'dia',
     efectoTexto: 'quema',
@@ -198,7 +198,7 @@ export const ESCENAS = [
     ],
     camara: {
       posicion: punto('chupas', -18, 19, 48),
-      objetivo: punto('chupas', -16, 10, 0),
+      objetivo: punto('chupas', -16, 13, 0),
     },
     ambiente: 'lluvia',
     efectoTexto: 'destello',

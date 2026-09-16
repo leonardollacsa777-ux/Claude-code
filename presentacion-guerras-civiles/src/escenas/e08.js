@@ -24,7 +24,7 @@ export default {
 
     // La corona en el cielo: la camara la atravesara en la transicion 8 -> 9.
     const corona = crearCorona({ radio: 3.8 });
-    corona.position.set(L.x, suelo + 24, L.z - 4);
+    corona.position.set(L.x, suelo + 20, L.z - 4);
     grupo.add(corona);
     mundo.registrar('coronaChupas', corona);
 
@@ -33,7 +33,7 @@ export default {
       centro: [L.x - 2, L.z - 15],
       rumbo: 0,
       cantidad: 88, ancho: 25, fondo: 9,
-      color: '#6E5A2A', arma: 'arcabuz', sembrado: 81,
+      color: '#A98A3E', arma: 'arcabuz', sembrado: 81,
     });
     const almagristas = crearEjercito({
       centro: [L.x + 2, L.z + 15],
@@ -77,7 +77,7 @@ export default {
       animar(t, dt, activa) {
         corona.userData.animar(t);
         if (!activa) return;
-        corona.position.y = alturaEn(LUGARES.chupas.x, LUGARES.chupas.z) + 24
+        corona.position.y = alturaEn(LUGARES.chupas.x, LUGARES.chupas.z) + 20
           + Math.sin(t * 0.45) * 0.9;
         const empuje = 7 + Math.sin(t * 0.5) * 2;
         realistas.userData.colocar(empuje, t);

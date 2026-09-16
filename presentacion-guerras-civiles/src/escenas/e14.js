@@ -65,6 +65,7 @@ export default {
       grupo,
       activar({ efectos }) {
         efectos.clima(null);
+        corona.scale.setScalar(1);
         if (tl) tl.kill();
         tl = gsap.timeline();
         for (let i = 0; i < fichas.length; i++) {

@@ -34,7 +34,7 @@ export default {
       centro: [L.x + 2, L.z - 14],
       rumbo: 0,
       cantidad: 58, ancho: 19, fondo: 8,
-      color: '#6E5A2A', arma: 'pica', sembrado: 102,
+      color: '#A98A3E', arma: 'pica', sembrado: 102,
     });
     grupo.add(gonzalistas, virreinales);
 
