@@ -12,6 +12,7 @@
 import { Vector3 } from 'three';
 import { gsap } from 'gsap';
 import { TRANSICIONES, validarTransiciones } from '../transiciones/indice.js';
+import { aplicarEfectosTransicion } from '../transiciones/efectos.js';
 import { alturaEn } from '../mundo/relieve.js';
 import { LUGARES } from '../data/lugares.js';
 import { alturaCrucero } from './camara.js';
@@ -39,10 +40,15 @@ const SALTO = {
 };
 
 export class Director {
-  constructor({ escenas, rig, mundo, paneles, progreso, cartel, alCambiar = null }) {
+  constructor({ escenas, rig, mundo, paneles, progreso, cartel, escenarios = [], efectos = null, alCambiar = null }) {
     this.escenas = escenas;
     this.rig = rig;
     this.mundo = mundo;
+    this.escenarios = escenarios;
+    this.efectos = efectos;
+    // Qué escenas deben animarse ahora mismo: la actual y, mientras se
+    // vuela, también la de destino (así se ve viva al llegar).
+    this.activas = new Set([0]);
     this.paneles = paneles;
     this.progreso = progreso;
     this.cartel = cartel;
@@ -134,21 +140,48 @@ export class Director {
   derivaDe(escena) {
     if (escena.esPortada) return { ampX: 0.1, ampY: 0.12, vel: 0.07, orbita: 0.004 };
     if (escena.ambiente === 'sobrenubes') return { ampX: 1.6, ampY: 1.0, vel: 0.08, orbita: 0.018 };
-    if (escena.marcador || escena.ambiente === 'polvo') return { ampX: 0.5, ampY: 0.35, vel: 0.2, orbita: 0.016 };
+    if (escena.vibra || escena.ambiente === 'polvo') return { ampX: 0.5, ampY: 0.35, vel: 0.2, orbita: 0.016 };
     return { ampX: 0.7, ampY: 0.45, vel: 0.12, orbita: 0.012 };
+  }
+
+  /** ¿Hay que animar esta escena en este momento? */
+  estaActiva(indice) {
+    return this.activas.has(indice);
+  }
+
+  /**
+   * Sólo se ve la escena actual (y la de destino mientras se vuela).
+   *
+   * Hace falta porque varias batallas ocurrieron casi en el mismo sitio:
+   * el Cusco, Las Salinas y Jaquijahuana están a pocos kilómetros, o sea
+   * a dos o tres unidades del mapa. Si se dibujaran todas a la vez, los
+   * ejércitos y los carteles de unas se meterían dentro de las otras.
+   */
+  aplicarVisibilidad() {
+    for (let i = 0; i < this.escenarios.length; i++) {
+      const g = this.escenarios[i]?.grupo;
+      if (g) g.visible = this.activas.has(i);
+    }
   }
 
   /** Lo que ocurre al aterrizar en una escena. */
   llegar(indice, { mostrarCartel = true } = {}) {
     const esc = this.escenas[indice];
     this.indice = indice;
+    this.activas = new Set([indice]);
+    this.aplicarVisibilidad();
     this.progreso?.marcar(indice);
     this.rig.ajustarDeriva(this.derivaDe(esc));
+
+    // La escena 3D de destino se enciende (partículas, ejércitos, luces).
+    this.escenarios[indice]?.activar({
+      efectos: this.efectos, mundo: this.mundo, rig: this.rig, director: this,
+    });
 
     if (mostrarCartel && esc.cartel) {
       this.cartel?.mostrar(esc.cartel);
     }
-    if (esc.marcador || esc.ambiente === 'polvo') {
+    if (esc.vibra || esc.ambiente === 'polvo') {
       this.rig.vibrar(0.07, 1.4);
     }
     this.alCambiar?.(esc, indice);
@@ -169,6 +202,10 @@ export class Director {
 
     if (inmediato) {
       const c = this.resolver(esc);
+      this.efectos?.apagar();
+      for (let i = 0; i < this.escenarios.length; i++) {
+        if (i !== destinoIdx) this.escenarios[i]?.desactivar({ efectos: this.efectos });
+      }
       this.rig.colocar(c.posicion, c.objetivo);
       this.mundo.ambiente.aplicar(esc.ambiente, 0);
       this.llegar(destinoIdx, { mostrarCartel: false });
@@ -178,8 +215,14 @@ export class Director {
 
     const { definicion, opciones, destino } = this.construirVuelo(this.indice, destinoIdx);
     const duracion = opciones.duracion || definicion.duracion || 3;
+    const salidaIdx = this.indice;
 
     this.ambienteDestino = esc.ambiente;
+
+    // Durante el vuelo se animan las dos escenas: la que dejamos y la que llega.
+    this.activas = new Set([salidaIdx, destinoIdx]);
+    this.aplicarVisibilidad();
+    this.escenarios[salidaIdx]?.desactivar({ efectos: this.efectos });
 
     const tl = gsap.timeline({
       onComplete: () => {
@@ -200,6 +243,22 @@ export class Director {
       this.mundo.ambiente.aplicar(esc.ambiente, duracion * 0.55);
     }, null, duracion * 0.22);
 
+    // 4) Y los efectos propios de ESTA transición: humo, nubes, cóndores,
+    //    estela, tormenta, destello… (ver src/transiciones/efectos.js)
+    if (this.efectos) {
+      const nombre = Object.keys(TRANSICIONES).find((k) => TRANSICIONES[k] === definicion);
+      aplicarEfectosTransicion(nombre, {
+        efectos: this.efectos,
+        tl,
+        duracion,
+        puntos: opciones.curvaPuntos || [],
+        mundo: this.mundo,
+        camara: this.rig.camara,
+        desde: this.escenas[salidaIdx],
+        hacia: esc,
+      });
+    }
+
     this.tlActiva = tl;
     this.transicionActual = definicion;
     return true;
@@ -212,6 +271,9 @@ export class Director {
     if (this.ambienteDestino) {
       this.mundo.ambiente.aplicar(this.ambienteDestino, 0.3);
     }
+    // Los efectos en curso se cortan: si no, el humo o la tormenta seguirían
+    // sonando en una escena a la que ya llegamos.
+    this.efectos?.apagar();
     tl.progress(1);
   }
 

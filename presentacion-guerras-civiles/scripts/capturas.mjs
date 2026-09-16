@@ -71,7 +71,9 @@ for (const pantalla of PANTALLAS) {
     await pagina.goto(`${URL_BASE}/?escena=${n}&fps`, { waitUntil: 'load' });
     // Esperamos a que el mundo dibuje y el texto termine de aparecer.
     await pagina.waitForFunction(() => !!window.presentacion, null, { timeout: 20000 });
-    await pagina.waitForTimeout(2600);
+    // Margen amplio: en un servidor sin GPU los primeros cuadros van muy
+    // lentos y el texto todavía se estaría escribiendo.
+    await pagina.waitForTimeout(Number(args.espera || 5200));
 
     const medidas = await pagina.evaluate(() => {
       const panel = document.querySelector('.panel');
@@ -90,6 +92,11 @@ for (const pantalla of PANTALLAS) {
         chocaConBarra: p.bottom > b.top + 2,
         recortado: panel.scrollHeight > panel.clientHeight + 2,
         ultimaVineta: li[li.length - 1] || null,
+        // Que el texto haya TERMINADO de aparecer, no sólo que exista.
+        opacidadPanel: Number(getComputedStyle(panel).opacity),
+        trozosInvisibles: [...panel.querySelectorAll('.trozo')]
+          .filter((e) => Number(getComputedStyle(e).opacity) < 0.5).length,
+        trozosTotales: panel.querySelectorAll('.trozo').length,
         fps: Number(document.getElementById('avisoFps')?.textContent?.split(' ')[0] || 0),
       };
     });
@@ -98,6 +105,8 @@ for (const pantalla of PANTALLAS) {
     if (medidas.desbordaAlto) problemas.push(`[${pantalla.nombre}] escena ${n}: el panel se sale de la pantalla`);
     if (medidas.chocaConBarra) problemas.push(`[${pantalla.nombre}] escena ${n}: el panel choca con la barra de progreso`);
     if (medidas.recortado) problemas.push(`[${pantalla.nombre}] escena ${n}: el texto queda recortado dentro del panel`);
+    if (medidas.opacidadPanel < 0.95) problemas.push(`[${pantalla.nombre}] escena ${n}: el panel no terminó de aparecer (opacidad ${medidas.opacidadPanel})`);
+    if (medidas.trozosInvisibles > 0) problemas.push(`[${pantalla.nombre}] escena ${n}: quedan ${medidas.trozosInvisibles} de ${medidas.trozosTotales} trozos de texto sin aparecer`);
 
     informe.push({ pantalla: pantalla.nombre, escena: n, ...medidas });
 

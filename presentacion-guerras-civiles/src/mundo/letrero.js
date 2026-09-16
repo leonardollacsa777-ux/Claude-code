@@ -83,16 +83,16 @@ export function crearPilar(anio, descripcion, { alto = 9 } = {}) {
   grupo.add(piedra);
 
   const letreroAnio = crearLetrero(anio, {
-    alto: 2.6, color: '#FFE9A8', fondo: 'rgba(10,16,26,0.86)', peso: 700,
+    alto: 6, color: '#FFE9A8', fondo: 'rgba(10,16,26,0.88)', peso: 700,
   });
   letreroAnio.position.y = alto;
   grupo.add(letreroAnio);
 
   const letreroTexto = crearLetrero(descripcion, {
-    alto: 1.15, color: PALETA.pergamino, fondo: 'rgba(10,16,26,0.7)',
+    alto: 2.4, color: PALETA.pergamino, fondo: 'rgba(10,16,26,0.78)',
     borde: null, fuente: '"EB Garamond", Georgia, serif', peso: 500, relleno: 0.35,
   });
-  letreroTexto.position.y = alto - 2.3;
+  letreroTexto.position.y = alto - 4.6;
   grupo.add(letreroTexto);
 
   grupo.userData.letreros = [letreroAnio, letreroTexto];

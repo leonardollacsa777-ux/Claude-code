@@ -13,7 +13,14 @@ quemados, el humo, las siluetas y los retratos— está **generado por código**
 - el archivo final pesa poco.
 
 Esto sigue la indicación del encargo: *"Si no encuentras una imagen adecuada,
-usa siluetas o figuras 3D estilizadas en su lugar"*.
+usa siluetas o figuras 3D estilizadas en su lugar"*. Se hizo así porque la red
+del entorno donde se programó no permite descargar de Wikimedia Commons.
+
+Los **nueve retratos** de la escena 4 son dibujos hechos con código al estilo
+de un grabado antiguo (`src/mundo/retratos.js`). **No son retratos reales** de
+los personajes: son figuras estilizadas que los representan. Cada uno lleva
+algún rasgo que sí está documentado, como el parche en el ojo de Diego de
+Almagro o el hábito de clérigo de Pedro de la Gasca.
 
 Si más adelante quieren añadir retratos reales, deben ser de **dominio público**
 (por ejemplo, pinturas antiguas de Wikimedia Commons). Se colocan en
@@ -46,5 +53,10 @@ Fechas, nombres y lugares tomados del material del curso de Ciencias Sociales
 
 ## Sonido
 
-*(Fase 3)* El sonido será **generado por el propio navegador** con la Web Audio
-API (viento, tambores, truenos). No se usa ningún archivo de audio descargado.
+El sonido está **generado por el propio navegador** con la Web Audio API:
+ruido rosado filtrado para el viento y la lluvia, osciladores graves para los
+tambores y un estallido de ruido con caída para los truenos.
+
+**No se usa ningún archivo de audio descargado**, así que no hay ningún
+problema de derechos. Está apagado por defecto y se enciende con la tecla **M**
+(ver `src/nucleo/audio.js`).
