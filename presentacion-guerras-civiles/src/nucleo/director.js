@@ -40,12 +40,13 @@ const SALTO = {
 };
 
 export class Director {
-  constructor({ escenas, rig, mundo, paneles, progreso, cartel, escenarios = [], efectos = null, alCambiar = null }) {
+  constructor({ escenas, rig, mundo, paneles, progreso, cartel, escenarios = [], efectos = null, telon = null, alCambiar = null }) {
     this.escenas = escenas;
     this.rig = rig;
     this.mundo = mundo;
     this.escenarios = escenarios;
     this.efectos = efectos;
+    this.telon = telon;
     // Qué escenas deben animarse ahora mismo: la actual y, mientras se
     // vuela, también la de destino (así se ve viva al llegar).
     this.activas = new Set([0]);
@@ -173,6 +174,10 @@ export class Director {
     this.progreso?.marcar(indice);
     this.rig.ajustarDeriva(this.derivaDe(esc));
 
+    // Si esta escena tiene imagen o video, el telón la muestra a pantalla
+    // completa; si no, se ve su escenario 3D. Ver src/ui/telon.js.
+    this.telon?.mostrar(esc.id, { retraso: 0.05 });
+
     // La escena 3D de destino se enciende (partículas, ejércitos, luces).
     this.escenarios[indice]?.activar({
       efectos: this.efectos, mundo: this.mundo, rig: this.rig, director: this,
@@ -218,6 +223,10 @@ export class Director {
     const salidaIdx = this.indice;
 
     this.ambienteDestino = esc.ambiente;
+
+    // El telón se va: durante el vuelo se ve el mapa 3D. Eso es lo que
+    // mantiene los viajes de cámara entre ciudades.
+    this.telon?.ocultar({ duracion: Math.min(0.6, duracion * 0.2) });
 
     // Durante el vuelo se animan las dos escenas: la que dejamos y la que llega.
     this.activas = new Set([salidaIdx, destinoIdx]);

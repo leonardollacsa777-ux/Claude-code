@@ -1,0 +1,36 @@
+CARPETA DE IMÁGENES Y VIDEOS
+============================
+
+Aquí van las imágenes o videos fotorrealistas de cada escena.
+
+NOMBRES EXACTOS (esto es lo único importante):
+
+  escena-01.jpg   ->  Portada
+  escena-02.jpg   ->  ¿Qué fueron las guerras civiles?
+  escena-03.jpg   ->  El origen del conflicto
+  escena-04.jpg   ->  Personajes principales
+  escena-05.jpg   ->  Almagro vuelve de Chile
+  escena-06.jpg   ->  Batalla de Las Salinas
+  escena-07.jpg   ->  El asesinato de Francisco Pizarro
+  escena-08.jpg   ->  Batalla de Chupas
+  escena-09.jpg   ->  Las Leyes Nuevas
+  escena-10.jpg   ->  Iñaquito
+  escena-11.jpg   ->  La Gasca, "el Pacificador"
+  escena-12.jpg   ->  Hernández Girón
+  escena-13.jpg   ->  Línea de tiempo
+  escena-14.jpg   ->  Consecuencias
+  escena-15.jpg   ->  Conclusión
+
+También sirven .png, .jpeg y .webp
+
+VIDEOS
+  Si en vez de imagen quieres video, usa .mp4 con el mismo nombre:
+  escena-01.mp4
+  Si hay imagen Y video de la misma escena, manda el video.
+  Que duren entre 4 y 8 segundos: se repiten solos en bucle.
+
+SI FALTA UN ARCHIVO
+  No pasa nada: esa escena usa el escenario 3D de siempre.
+  Puedes ir añadiéndolas de a poco.
+
+LOS PROMPTS PARA GENERARLAS ESTÁN EN:  ../../PROMPTS-HIGGSFIELD.md

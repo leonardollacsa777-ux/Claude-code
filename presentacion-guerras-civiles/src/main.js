@@ -20,6 +20,7 @@ import { Sonido } from './nucleo/audio.js';
 import { Paneles } from './ui/paneles.js';
 import { Progreso } from './ui/progreso.js';
 import { Cartel } from './ui/cartel.js';
+import { Telon } from './ui/telon.js';
 import { Efectos } from './mundo/efectos.js';
 import { crearEscenarios } from './escenas/indice.js';
 import { animarBanderas } from './mundo/banderas.js';
@@ -78,6 +79,7 @@ let mundo = null;
 let rig = null;
 let rendimiento = null;
 let sonido = null;
+let telon = null;
 const letreros = [];
 
 fuentesListas.then(iniciar);
@@ -89,6 +91,9 @@ function iniciar() {
   rig = new Rig(camara);
 
   efectos = new Efectos(mundo, camara, capaUI);
+
+  // El telón de imágenes/videos va entre el lienzo 3D y los textos.
+  telon = new Telon(document.body, ESCENAS.length);
   escenarios = crearEscenarios(mundo, { efectos, camara, letreros });
 
   /* --------------------------------------------------------- rendimiento */
@@ -98,6 +103,7 @@ function iniciar() {
       avisoLigero.classList.toggle('aviso--oculto', !activo);
       avisoLigero.textContent = motivo === 'automatico' ? 'Modo ligero (automático)' : 'Modo ligero';
       efectos.aplicarModoLigero(activo);
+      telon.aplicarModoLigero(activo);
     },
   });
 
@@ -126,6 +132,7 @@ function iniciar() {
     cartel,
     escenarios,
     efectos,
+    telon,
     alCambiar: (esc) => sonido.ambiente(esc.ambiente, esc),
   });
 
@@ -166,8 +173,22 @@ function iniciar() {
     });
   }));
 
+  // Buscamos las imágenes y videos de public/medios/. No bloquea: la
+  // presentación ya está funcionando con el 3D mientras tanto, y las
+  // escenas que tengan archivo lo estrenan en cuanto se encuentre.
+  telon.buscarMedios().then((cuantos) => {
+    if (cuantos > 0) {
+      document.body.classList.add('con-telon');
+      telon.mostrar(director.escena.id, { duracion: 1.2 });
+      console.info(`[medios] ${cuantos} de ${ESCENAS.length} escenas tienen imagen o video.`);
+    } else {
+      console.info('[medios] Ninguna escena tiene imagen todavía: se usa el 3D. ' +
+        'Mira PROMPTS-HIGGSFIELD.md para generarlas.');
+    }
+  });
+
   // Para depurar desde la consola del navegador.
-  window.presentacion = { director, mundo, rig, rendimiento, efectos, escenarios, sonido, ESCENAS };
+  window.presentacion = { director, mundo, rig, rendimiento, efectos, escenarios, sonido, telon, ESCENAS };
 }
 
 /* ------------------------------------------------------- tamaño de pantalla */
@@ -226,6 +247,15 @@ function cuadro() {
   }
 
   orientarLetreros(letreros, camara);
+  telon.actualizar(rig);
+
+  // Si el telón tapa toda la pantalla y no hay vuelo, no hace falta dibujar
+  // el mundo 3D: ahorra mucha batería y FPS en una laptop del colegio.
+  if (telon.cubriendo && !director.enTransicion) {
+    rendimiento.medir();
+    if (mostrarFps) avisoFps.textContent = `${Math.round(rendimiento.fps)} FPS`;
+    return;
+  }
 
   if (efectos.desenfocando) {
     if (compositor) compositor.render(dt);
